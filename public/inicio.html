@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url('./img/fundo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .welcome-box {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .welcome-box img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .welcome-box h1 {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            margin-top: 20px;
+        }
+
+        .options a {
+            display: block;
+            background-color: #7785cc;
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .options a:hover {
+            background-color: #6777cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-box">
+            <img src="./img/logo.png" alt="GNR Logo">
+            <h1>Bem-vindo ao Sistema Integrado de Informação Portucalense [SIIP]</h1>
+            <p>Este sistema é utilizado para gerenciar e visualizar logs de atividades, gerar relatórios e muito mais.</p>
+            <div class="options" id="options">
+
+            </div>
+        </div>
+    </div>
+    <script src="js/inicio.js"></script>
+</body>
+</html>

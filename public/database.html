@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Dados</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .report {
+            background-color: #444;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .report img {
+            max-width: 100px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .report-content {
+            display: none;
+            margin-top: 10px;
+        }
+        .report.expanded .report-content {
+            display: block;
+        }
+        .edit-btn, .delete-btn {
+            position: absolute;
+            top: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            background-color: #F44336;
+        }
+        .edit-btn {
+            right: 50px;
+        }
+        .delete-btn {
+            right: 10px;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #666;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Banco de Dados de Relatórios</h1>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Pesquisar pelo título...">
+        </div>
+        <div id="reportsContainer">
+            <p>Sem relatórios para exibir.</p>
+        </div>
+    </div>
+    <script>
+        const reportsContainer = document.getElementById('reportsContainer');
+        const searchInput = document.getElementById('search');
+        const currentUser = 'Marcelo_Souza';
+
+        function displayReports(reports) {
+            reportsContainer.innerHTML = '';
+
+            if (reports.length === 0) {
+                reportsContainer.innerHTML = '<p>SISTEMA EM MANUTENÇÃO, AGUARDE ! </p>';
+                return;
+            }
+
+            reports.forEach((report, index) => {
+                const reportDiv = document.createElement('div');
+                reportDiv.className = 'report';
+
+                let imagesHTML = '';
+                if (report.images) {
+                    imagesHTML = report.images.map(image => `<img src="${URL.createObjectURL(image)}" alt="Imagem do relatório">`).join('');
+                }
+
+                reportDiv.innerHTML = `
+                    <h2>${report.title}</h2>
+                    <button class="edit-btn" style="display: ${currentUser === 'Marcelo_Souza' ? 'block' : 'none'}">Editar</button>
+                    <button class="delete-btn" style="display: ${currentUser === 'Marcelo_Souza' ? 'block' : 'none'}">Excluir</button>
+                    <div class="report-content">
+                        <p><strong>Discord:</strong> ${report.discord}</p>
+                        <p><strong>Ocorrência:</strong> ${report.ocorrencia}</p>
+                        <p><strong>Detenção:</strong> ${report.detencao}</p>
+                        <p><strong>Detidos:</strong> ${report.detidos}</p>
+                        <p><strong>Bolsos:</strong> ${report.bolsos}</p>
+                        <p><strong>Crimes:</strong> ${report.crimes}</p>
+                        <p><strong>Líder de Ocorrência:</strong> ${report.lider}</p>
+                        <div class="images">
+                            ${imagesHTML}
+                        </div>
+                    </div>
+                `;
+
+                // Adicionar eventos de edição e exclusão
+                const editBtn = reportDiv.querySelector('.edit-btn');
+                const deleteBtn = reportDiv.querySelector('.delete-btn');
+
+                reportDiv.addEventListener('click', () => {
+                    reportDiv.classList.toggle('expanded');
+                });
+
+                if (editBtn) {
+                    editBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        // Lógica de edição
+                        alert('Editar relatório.');
+                    });
+                }
+
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        // Lógica de exclusão
+                        alert('Excluir relatório.');
+                        reportDiv.remove();
+                    });
+                }
+
+                reportsContainer.appendChild(reportDiv);
+            });
+        }
+
+        function filterReports() {
+            const searchValue = searchInput.value.toLowerCase();
+            const filteredReports = reports.filter(report =>
+                report.title.toLowerCase().includes(searchValue)
+            );
+            displayReports(filteredReports);
+        }
+
+        searchInput.addEventListener('input', filterReports);
+
+        // Simulação de dados de relatórios
+        const reports = JSON.parse(localStorage.getItem('reports')) || [];
+        displayReports(reports);
+    </script>
+</body>
+</html>
